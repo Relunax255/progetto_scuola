@@ -171,7 +171,7 @@ namespace progetto_scuola
                 MessageBox.Show(body);
                 string fp = body.Split(',')[0];
                 //int cc = 10;
-                //while ((Char)body[cc] != (Char)"") {
+                //while ((Char)body[cc] != (Char)"") 
                 
                 string jsonString = JsonSerializer.Serialize(body);
                 MessageBox.Show(jsonString);
