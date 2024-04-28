@@ -22,7 +22,7 @@ namespace progetto_scuola
         //aaaaaaaaaaa
         //aaaaaa
         //aaaaaaaa
-        //aaaaa
+        //aaaaallllllll
         Label[] Boxlettere = new Label[0];
         System.Windows.Forms.Panel[] boxTentativi = new System.Windows.Forms.Panel[7];
         Char[] lettere = new Char[0];
