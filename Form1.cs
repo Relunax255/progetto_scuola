@@ -23,6 +23,7 @@ namespace progetto_scuola
         //aaaaaa
         //aaaaaaaa
         //aaaaallllllll
+        //checkifworksall
         Label[] Boxlettere = new Label[0];
         System.Windows.Forms.Panel[] boxTentativi = new System.Windows.Forms.Panel[7];
         Char[] lettere = new Char[0];
@@ -66,32 +67,32 @@ namespace progetto_scuola
             #region contorni txtInserimento
 
             #endregion
-
-
+            buttonSettings.Location = new Point(this.Size.Width - buttonSettings.Size.Width, panelTitle.Size.Height+1);
+            panelSettings.Location = new Point(this.Size.Width - panelSettings.Size.Width, panelTitle.Size.Height + buttonSettings.Size.Height + 1);
             panelName.Location = new Point(154, 240);
             panelName.Location = new Point(this.Size.Width / 2 - 359, this.Size.Height / 2 - 90);
             buttonPlay.Location = new Point(this.Size.Width / 2 - buttonPlay.Size.Width / 2, this.Size.Height / 2 - buttonPlay.Size.Height / 2);
 
             txtNickname.Focus();
-            if (!Directory.Exists(@"data"))
+            if (!File.Exists(Path.Combine(@"data", "playerinfo.txt")))
             {
-                Directory.CreateDirectory(@"data");
-            
+                //Directory.CreateDirectory(@"data");
+                
 
                 buttonPlay.Visible = false;
                 buttonPlay.Enabled = false;
                 panelName.Visible = true;
                 panelName.Enabled = true;
-                labelUsrName.Visible = false;
+                labelNome.Visible = false;
+                
             }
 
             else //===========PRENDI INFO DAL FILE
             {
+                
                 #region prendi info dal file esistente
-                panelName.Visible = false; panelName.Enabled = false; buttonPlay.Visible = true;
-                buttonPlay.Enabled = true;
-                labelUsrName.Visible = true;
-                labelPts.Visible = true;
+
+
                 //panelVolumeInside.Visible = false;
 
 
@@ -108,12 +109,12 @@ namespace progetto_scuola
                             buttonPlay.Enabled = false;
                             panelName.Visible = true;
                             panelName.Enabled = true;
-                            labelUsrName.Visible = false;
+                            labelNome.Visible = false;
                             read.Close();
                             return;
                         }
                         playerName = split[1];
-                        labelUsrName.Text = playerName;
+                        labelNome.Text = playerName;
                     }
                     if (split[0] == "score")
                     {
@@ -124,8 +125,20 @@ namespace progetto_scuola
                 read.Close();
 
                 #endregion
+                panelName.Visible = false; panelName.Enabled = false; buttonPlay.Visible = true;
+                buttonPlay.Enabled = true;
+                labelNome.Visible = true;
+                labelPts.Visible = true;
+               
+                panelInfo.Visible = true;
             }
-            panelInfo.Location = new Point(screenWidth - 450, panelTitle.Size.Height + 4);
+            labelPts.Location = new Point(lblDescrPts.Location.X + lblDescrPts.Size.Width + 1, lblDescrPts.Location.Y);
+            labelNome.Location = new Point(lblDescrNome.Location.X + lblDescrNome.Size.Width + 1, lblDescrNome.Location.Y);
+            if (lblDescrNome.Size.Width+labelNome.Size.Width>lblDescrPts.Size.Width+labelPts.Size.Width)
+            {
+                panelInfo.Size = new Size(5 + 5 + lblDescrNome.Size.Width + labelNome.Size.Width, 10 + lblDescrNome.Size.Height + labelNome.Size.Height);
+            }
+            else panelInfo.Size = new Size(5 + 5 + lblDescrPts.Size.Width + labelPts.Size.Width, 10 + lblDescrPts.Size.Height + labelPts.Size.Height);
 
 
 
@@ -587,20 +600,23 @@ namespace progetto_scuola
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
 
-            if (txtNickname.Text.Length >= 3 && txtNickname.Text.Length <= 16)
+            if (txtNickname.Text.Length >= 0 && txtNickname.Text.Length <= 16)
             {
                 StreamWriter w;
+                Directory.CreateDirectory(@"data");
                 w = new StreamWriter(System.IO.Path.Combine(@"data", "playerinfo.txt"));
                 w.WriteLine($"name={txtNickname.Text}"); buttonPlay.Visible = true;
                 int initScore = 0;
                 w.WriteLine($"score={initScore}");
                 w.Close();
-                labelUsrName.Text = txtNickname.Text;
+                labelNome.Text = txtNickname.Text;
                 buttonPlay.Enabled = true;
                 panelName.Visible = false;
                 panelName.Enabled = false;
-                labelUsrName.Visible = true;
+                labelNome.Visible = true;
                 labelPts.Visible = true;
+                panelInfo.Visible = true;
+
                 return;
             }
             MessageBox.Show("La lunghezza del tuo nickname deve essere compresa tra 3 e 16 caratteri");
@@ -642,6 +658,31 @@ namespace progetto_scuola
             if (int.Parse(labelVolume.Text) > 99) labelVolume.Text = "100";
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo Dir = new DirectoryInfo(@"data");
+            if (Dir.Exists)
+            {
+                foreach (FileInfo file in Dir.GetFiles())
+                {
+                    file.Delete();
+                }
+                Dir.Delete();
+            }
+        }
+        private void CloseForm(object sender, FormClosingEventArgs e)
+        {
+            if (!File.Exists(Path.Combine(@"data", "playerinfo.txt")) && Directory.Exists(@"data"))
+            {
+                Directory.Delete(@"data");
+            }
+        }
 
+        private void buttonSettings_Click(object sender, EventArgs e)
+        {
+            if (!panelSettings.Visible)
+            panelSettings.Visible = true;
+            else panelSettings.Visible = false;
+        }
     }
 }

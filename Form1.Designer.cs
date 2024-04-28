@@ -31,7 +31,6 @@ namespace progetto_scuola
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.panelTitle = new System.Windows.Forms.Panel();
             this.spaceClose1 = new ReaLTaiizor.Controls.SpaceClose();
@@ -44,10 +43,10 @@ namespace progetto_scuola
             this.label3 = new System.Windows.Forms.Label();
             this.btnGuess = new System.Windows.Forms.Button();
             this.labelPts = new System.Windows.Forms.Label();
-            this.labelUsrName = new System.Windows.Forms.Label();
+            this.labelNome = new System.Windows.Forms.Label();
             this.labelVolume = new System.Windows.Forms.Label();
             this.hScrollVolume = new ReaLTaiizor.Controls.MaterialScrollBar();
-            this.panel2 = new ReaLTaiizor.Controls.Panel();
+            this.panelSettings = new ReaLTaiizor.Controls.Panel();
             this.panelVolumeInside = new ReaLTaiizor.Controls.Panel();
             this.ScrollVolume = new ReaLTaiizor.Controls.MaterialScrollBar();
             this.panelPerso = new System.Windows.Forms.Panel();
@@ -61,10 +60,12 @@ namespace progetto_scuola
             this.lblDescrNome = new System.Windows.Forms.Label();
             this.lblDescrPts = new System.Windows.Forms.Label();
             this.panelInfo = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.buttonSettings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.panelTitle.SuspendLayout();
             this.panelName.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.panelSettings.SuspendLayout();
             this.panelVolumeInside.SuspendLayout();
             this.panelPerso.SuspendLayout();
             this.panelVinto.SuspendLayout();
@@ -82,7 +83,7 @@ namespace progetto_scuola
             this.panelTitle.Controls.Add(this.spaceClose1);
             this.panelTitle.Controls.Add(this.bigLabel1);
             this.panelTitle.Location = new System.Drawing.Point(0, 0);
-            this.panelTitle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTitle.Margin = new System.Windows.Forms.Padding(4);
             this.panelTitle.Name = "panelTitle";
             this.panelTitle.Size = new System.Drawing.Size(2000, 123);
             this.panelTitle.TabIndex = 0;
@@ -96,8 +97,8 @@ namespace progetto_scuola
             this.spaceClose1.DefaultLocation = true;
             this.spaceClose1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.spaceClose1.Image = null;
-            this.spaceClose1.Location = new System.Drawing.Point(1965, 4);
-            this.spaceClose1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.spaceClose1.Location = new System.Drawing.Point(1966, 3);
+            this.spaceClose1.Margin = new System.Windows.Forms.Padding(4);
             this.spaceClose1.Name = "spaceClose1";
             this.spaceClose1.NoRounding = false;
             this.spaceClose1.Size = new System.Drawing.Size(31, 26);
@@ -124,7 +125,7 @@ namespace progetto_scuola
             this.buttonPlay.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonPlay.Font = new System.Drawing.Font("Cooper Black", 33F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonPlay.Location = new System.Drawing.Point(52, 449);
-            this.buttonPlay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonPlay.Margin = new System.Windows.Forms.Padding(4);
             this.buttonPlay.Name = "buttonPlay";
             this.buttonPlay.Size = new System.Drawing.Size(433, 160);
             this.buttonPlay.TabIndex = 1;
@@ -150,7 +151,7 @@ namespace progetto_scuola
             this.txtNickname.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtNickname.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F);
             this.txtNickname.Location = new System.Drawing.Point(83, 78);
-            this.txtNickname.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNickname.Margin = new System.Windows.Forms.Padding(4);
             this.txtNickname.Name = "txtNickname";
             this.txtNickname.Size = new System.Drawing.Size(761, 53);
             this.txtNickname.TabIndex = 18;
@@ -161,7 +162,7 @@ namespace progetto_scuola
             this.buttonConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonConfirm.Font = new System.Drawing.Font("Cooper Black", 24F);
             this.buttonConfirm.Location = new System.Drawing.Point(353, 154);
-            this.buttonConfirm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonConfirm.Margin = new System.Windows.Forms.Padding(4);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(243, 58);
             this.buttonConfirm.TabIndex = 17;
@@ -187,7 +188,7 @@ namespace progetto_scuola
             this.BackNickname.Lighting = false;
             this.BackNickname.LinearGradientPen = false;
             this.BackNickname.Location = new System.Drawing.Point(63, 66);
-            this.BackNickname.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BackNickname.Margin = new System.Windows.Forms.Padding(4);
             this.BackNickname.Name = "BackNickname";
             this.BackNickname.PenWidth = 15;
             this.BackNickname.RGB = false;
@@ -219,7 +220,7 @@ namespace progetto_scuola
             this.btnGuess.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnGuess.Font = new System.Drawing.Font("Cooper Black", 40F);
             this.btnGuess.Location = new System.Drawing.Point(772, 362);
-            this.btnGuess.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGuess.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuess.Name = "btnGuess";
             this.btnGuess.Size = new System.Drawing.Size(381, 124);
             this.btnGuess.TabIndex = 18;
@@ -240,23 +241,23 @@ namespace progetto_scuola
             this.labelPts.Text = "Punteggio";
             this.labelPts.Visible = false;
             // 
-            // labelUsrName
+            // labelNome
             // 
-            this.labelUsrName.AutoSize = true;
-            this.labelUsrName.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.labelUsrName.Font = new System.Drawing.Font("Cooper Black", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelUsrName.Location = new System.Drawing.Point(157, 11);
-            this.labelUsrName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelUsrName.Name = "labelUsrName";
-            this.labelUsrName.Size = new System.Drawing.Size(462, 31);
-            this.labelUsrName.TabIndex = 19;
-            this.labelUsrName.Text = "WWWWWWWWWWWWWWWW";
-            this.labelUsrName.Visible = false;
+            this.labelNome.AutoSize = true;
+            this.labelNome.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.labelNome.Font = new System.Drawing.Font("Cooper Black", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelNome.Location = new System.Drawing.Point(151, 11);
+            this.labelNome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelNome.Name = "labelNome";
+            this.labelNome.Size = new System.Drawing.Size(462, 31);
+            this.labelNome.TabIndex = 19;
+            this.labelNome.Text = "WWWWWWWWWWWWWWWW";
+            this.labelNome.Visible = false;
             // 
             // labelVolume
             // 
             this.labelVolume.AutoSize = true;
-            this.labelVolume.Location = new System.Drawing.Point(179, 18);
+            this.labelVolume.Location = new System.Drawing.Point(126, 36);
             this.labelVolume.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelVolume.Name = "labelVolume";
             this.labelVolume.Size = new System.Drawing.Size(51, 16);
@@ -273,28 +274,29 @@ namespace progetto_scuola
             this.hScrollVolume.Size = new System.Drawing.Size(10, 200);
             this.hScrollVolume.TabIndex = 0;
             // 
-            // panel2
+            // panelSettings
             // 
-            this.panel2.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.panel2.Controls.Add(this.panelVolumeInside);
-            this.panel2.Controls.Add(this.labelVolume);
-            this.panel2.EdgeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(41)))), ((int)(((byte)(50)))));
-            this.panel2.Location = new System.Drawing.Point(1401, 267);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.panel2.Size = new System.Drawing.Size(397, 75);
-            this.panel2.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            this.panel2.TabIndex = 27;
-            this.panel2.Text = "panel2";
+            this.panelSettings.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.panelSettings.Controls.Add(this.panelVolumeInside);
+            this.panelSettings.Controls.Add(this.labelVolume);
+            this.panelSettings.EdgeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(41)))), ((int)(((byte)(50)))));
+            this.panelSettings.Location = new System.Drawing.Point(1275, 144);
+            this.panelSettings.Margin = new System.Windows.Forms.Padding(4);
+            this.panelSettings.Name = "panelSettings";
+            this.panelSettings.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.panelSettings.Size = new System.Drawing.Size(298, 137);
+            this.panelSettings.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            this.panelSettings.TabIndex = 27;
+            this.panelSettings.Text = "panel2";
+            this.panelSettings.Visible = false;
             // 
             // panelVolumeInside
             // 
             this.panelVolumeInside.BackColor = System.Drawing.Color.White;
             this.panelVolumeInside.Controls.Add(this.ScrollVolume);
             this.panelVolumeInside.EdgeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(41)))), ((int)(((byte)(50)))));
-            this.panelVolumeInside.Location = new System.Drawing.Point(68, 38);
-            this.panelVolumeInside.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelVolumeInside.Location = new System.Drawing.Point(15, 56);
+            this.panelVolumeInside.Margin = new System.Windows.Forms.Padding(4);
             this.panelVolumeInside.Name = "panelVolumeInside";
             this.panelVolumeInside.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.panelVolumeInside.Size = new System.Drawing.Size(267, 12);
@@ -305,7 +307,7 @@ namespace progetto_scuola
             // 
             this.ScrollVolume.Depth = 0;
             this.ScrollVolume.Location = new System.Drawing.Point(0, 0);
-            this.ScrollVolume.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ScrollVolume.Margin = new System.Windows.Forms.Padding(4);
             this.ScrollVolume.Maximum = 109;
             this.ScrollVolume.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             this.ScrollVolume.Name = "ScrollVolume";
@@ -323,7 +325,7 @@ namespace progetto_scuola
             this.panelPerso.Controls.Add(this.panel3);
             this.panelPerso.Controls.Add(this.label4);
             this.panelPerso.Location = new System.Drawing.Point(1120, 689);
-            this.panelPerso.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelPerso.Margin = new System.Windows.Forms.Padding(4);
             this.panelPerso.Name = "panelPerso";
             this.panelPerso.Size = new System.Drawing.Size(798, 260);
             this.panelPerso.TabIndex = 29;
@@ -331,9 +333,8 @@ namespace progetto_scuola
             // 
             // panel3
             // 
-            this.panel3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel3.BackgroundImage")));
             this.panel3.Location = new System.Drawing.Point(536, 49);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(171, 158);
             this.panel3.TabIndex = 14;
@@ -356,7 +357,7 @@ namespace progetto_scuola
             this.panelVinto.Controls.Add(this.panel4);
             this.panelVinto.Controls.Add(this.label1);
             this.panelVinto.Location = new System.Drawing.Point(93, 636);
-            this.panelVinto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelVinto.Margin = new System.Windows.Forms.Padding(4);
             this.panelVinto.Name = "panelVinto";
             this.panelVinto.Size = new System.Drawing.Size(798, 260);
             this.panelVinto.TabIndex = 28;
@@ -364,9 +365,8 @@ namespace progetto_scuola
             // 
             // panel4
             // 
-            this.panel4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel4.BackgroundImage")));
             this.panel4.Location = new System.Drawing.Point(527, 49);
-            this.panel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(171, 158);
             this.panel4.TabIndex = 14;
@@ -397,12 +397,12 @@ namespace progetto_scuola
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(4, 130);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Location = new System.Drawing.Point(0, 131);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(93, 41);
+            this.button1.Size = new System.Drawing.Size(122, 41);
             this.button1.TabIndex = 33;
-            this.button1.Text = "button1";
+            this.button1.Text = "RESTART-APP";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -433,39 +433,65 @@ namespace progetto_scuola
             this.panelInfo.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.panelInfo.Controls.Add(this.labelPts);
             this.panelInfo.Controls.Add(this.lblDescrPts);
-            this.panelInfo.Controls.Add(this.labelUsrName);
+            this.panelInfo.Controls.Add(this.labelNome);
             this.panelInfo.Controls.Add(this.lblDescrNome);
             this.panelInfo.Location = new System.Drawing.Point(413, 213);
-            this.panelInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelInfo.Margin = new System.Windows.Forms.Padding(4);
             this.panelInfo.Name = "panelInfo";
             this.panelInfo.Size = new System.Drawing.Size(648, 73);
             this.panelInfo.TabIndex = 36;
+            this.panelInfo.Visible = false;
             // 
-            // Form2
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(0, 167);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(122, 41);
+            this.button2.TabIndex = 37;
+            this.button2.Text = "DELETE DATA";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // buttonSettings
+            // 
+            this.buttonSettings.Location = new System.Drawing.Point(0, 200);
+            this.buttonSettings.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSettings.Name = "buttonSettings";
+            this.buttonSettings.Size = new System.Drawing.Size(122, 41);
+            this.buttonSettings.TabIndex = 38;
+            this.buttonSettings.Text = "Settings";
+            this.buttonSettings.UseVisualStyleBackColor = true;
+            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
+            // 
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.ClientSize = new System.Drawing.Size(1940, 965);
+            this.Controls.Add(this.buttonSettings);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.panelInfo);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtInsert);
             this.Controls.Add(this.panelPerso);
             this.Controls.Add(this.panelVinto);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panelSettings);
             this.Controls.Add(this.btnGuess);
             this.Controls.Add(this.panelName);
             this.Controls.Add(this.buttonPlay);
             this.Controls.Add(this.panelTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximumSize = new System.Drawing.Size(2560, 1280);
             this.MinimumSize = new System.Drawing.Size(348, 75);
-            this.Name = "Form2";
+            this.Name = "Form1";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ffff";
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CloseForm);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PressKey);
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
@@ -473,8 +499,8 @@ namespace progetto_scuola
             this.panelTitle.PerformLayout();
             this.panelName.ResumeLayout(false);
             this.panelName.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.panelSettings.ResumeLayout(false);
+            this.panelSettings.PerformLayout();
             this.panelVolumeInside.ResumeLayout(false);
             this.panelPerso.ResumeLayout(false);
             this.panelPerso.PerformLayout();
@@ -500,10 +526,10 @@ namespace progetto_scuola
         private System.Windows.Forms.Button buttonConfirm;
         private System.Windows.Forms.Button btnGuess;
         private System.Windows.Forms.Label labelPts;
-        private System.Windows.Forms.Label labelUsrName;
+        private System.Windows.Forms.Label labelNome;
         private System.Windows.Forms.Label labelVolume;
         private ReaLTaiizor.Controls.MaterialScrollBar hScrollVolume;
-        private ReaLTaiizor.Controls.Panel panel2;
+        private ReaLTaiizor.Controls.Panel panelSettings;
         private ReaLTaiizor.Controls.Panel panelVolumeInside;
         private System.Windows.Forms.Panel panelPerso;
         private System.Windows.Forms.Panel panel3;
@@ -518,6 +544,8 @@ namespace progetto_scuola
         private System.Windows.Forms.Label lblDescrPts;
         private System.Windows.Forms.Label lblDescrNome;
         private System.Windows.Forms.Panel panelInfo;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonSettings;
     }
 }
 
