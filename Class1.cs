@@ -55,11 +55,11 @@ namespace Helper
             Lines[scoreIndex] = $"score={totalPoints}";
             File.WriteAllLines(Path.Combine(@"data", "playerinfo.txt"), Lines);
         }
-        public static void Speaker(string parola, int vm)
+        public static void Speaker(string parola, int vol)
         {
-            SpeechSynthesizer suono = new SpeechSynthesizer();
-            suono.Volume = vm;
-            suono.Speak(parola);
+            SpeechSynthesizer sp = new SpeechSynthesizer();
+            sp.Volume = vol;
+            sp.Speak(parola);
         }
         public async static void traduzione(string[] a, string parola)
         {

@@ -236,9 +236,9 @@ namespace progetto_scuola
             this.labelPts.Location = new System.Drawing.Point(157, 39);
             this.labelPts.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPts.Name = "labelPts";
-            this.labelPts.Size = new System.Drawing.Size(141, 29);
+            this.labelPts.Size = new System.Drawing.Size(28, 29);
             this.labelPts.TabIndex = 20;
-            this.labelPts.Text = "Punteggio";
+            this.labelPts.Text = "0";
             this.labelPts.Visible = false;
             // 
             // labelNome
@@ -249,9 +249,9 @@ namespace progetto_scuola
             this.labelNome.Location = new System.Drawing.Point(151, 11);
             this.labelNome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelNome.Name = "labelNome";
-            this.labelNome.Size = new System.Drawing.Size(462, 31);
+            this.labelNome.Size = new System.Drawing.Size(180, 31);
             this.labelNome.TabIndex = 19;
-            this.labelNome.Text = "WWWWWWWWWWWWWWWW";
+            this.labelNome.Text = "USERNAME";
             this.labelNome.Visible = false;
             // 
             // labelVolume
@@ -397,7 +397,7 @@ namespace progetto_scuola
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(0, 131);
+            this.button1.Location = new System.Drawing.Point(0, 396);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(122, 41);
@@ -410,7 +410,7 @@ namespace progetto_scuola
             // 
             this.lblDescrNome.AutoSize = true;
             this.lblDescrNome.Font = new System.Drawing.Font("Consolas", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescrNome.Location = new System.Drawing.Point(4, 11);
+            this.lblDescrNome.Location = new System.Drawing.Point(4, 10);
             this.lblDescrNome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDescrNome.Name = "lblDescrNome";
             this.lblDescrNome.Size = new System.Drawing.Size(139, 29);
@@ -431,20 +431,21 @@ namespace progetto_scuola
             // panelInfo
             // 
             this.panelInfo.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.panelInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelInfo.Controls.Add(this.labelPts);
             this.panelInfo.Controls.Add(this.lblDescrPts);
             this.panelInfo.Controls.Add(this.labelNome);
             this.panelInfo.Controls.Add(this.lblDescrNome);
-            this.panelInfo.Location = new System.Drawing.Point(413, 213);
+            this.panelInfo.Location = new System.Drawing.Point(827, 123);
             this.panelInfo.Margin = new System.Windows.Forms.Padding(4);
             this.panelInfo.Name = "panelInfo";
-            this.panelInfo.Size = new System.Drawing.Size(648, 73);
+            this.panelInfo.Size = new System.Drawing.Size(339, 73);
             this.panelInfo.TabIndex = 36;
             this.panelInfo.Visible = false;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(0, 167);
+            this.button2.Location = new System.Drawing.Point(0, 347);
             this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(122, 41);
@@ -489,7 +490,7 @@ namespace progetto_scuola
             this.Name = "Form1";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ffff";
+            this.Text = "indovinalaparolaform";
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CloseForm);
             this.Load += new System.EventHandler(this.Form1_Load);

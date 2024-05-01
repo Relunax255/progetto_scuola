@@ -14,15 +14,14 @@ using System.Windows.Forms;
 using System.Text.Json;
 using System.Threading;
 using System.Diagnostics;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 
 namespace progetto_scuola
 {
     public partial class Form1 : Form
     {
-        //aaaaaaaaaaa
-        //aaaaaa
-        //aaaaaaaa
-        //aaaaallllllll
+        
         //checkifworksall
         Label[] Boxlettere = new Label[0];
         System.Windows.Forms.Panel[] boxTentativi = new System.Windows.Forms.Panel[7];
@@ -47,10 +46,7 @@ namespace progetto_scuola
             InitializeComponent();
         }
 
-        private void themeForm1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -136,10 +132,10 @@ namespace progetto_scuola
             labelNome.Location = new Point(lblDescrNome.Location.X + lblDescrNome.Size.Width + 1, lblDescrNome.Location.Y);
             if (lblDescrNome.Size.Width+labelNome.Size.Width>lblDescrPts.Size.Width+labelPts.Size.Width)
             {
-                panelInfo.Size = new Size(5 + 5 + lblDescrNome.Size.Width + labelNome.Size.Width, 10 + lblDescrNome.Size.Height + labelNome.Size.Height);
+                panelInfo.Size = new Size(10 + lblDescrNome.Size.Width + labelNome.Size.Width, 10 + lblDescrNome.Size.Height + labelNome.Size.Height);
             }
-            else panelInfo.Size = new Size(5 + 5 + lblDescrPts.Size.Width + labelPts.Size.Width, 10 + lblDescrPts.Size.Height + labelPts.Size.Height);
-
+            else panelInfo.Size = new Size(10 + lblDescrPts.Size.Width + labelPts.Size.Width, 10 + lblDescrPts.Size.Height + labelPts.Size.Height);
+            panelInfo.Location = new Point(this.Size.Width / 2 + 10, panelTitle.Size.Height);
 
 
 
@@ -154,6 +150,7 @@ namespace progetto_scuola
 
         private async void buttonPlay_Click(object sender, EventArgs e)
         {
+            buttonPlay.Enabled = false;
             txtInsert.Text = "";
             lettereUsate = null;
             numUsate = 0;
@@ -338,7 +335,7 @@ namespace progetto_scuola
             {
                 System.Windows.Forms.Panel np = new System.Windows.Forms.Panel();
                 np.Location = new Point(x, 10 + panelTitle.Size.Height);
-                np.Size = new Size((this.Size.Height - 20) / 7, 30);
+                np.Size = new Size(this.Size.Width/2/7, 30);
                 np.BackColor = Color.FromArgb(50, 255, 50);
                 np.Margin = new Padding(0);
                 np.BorderStyle = BorderStyle.FixedSingle;
@@ -386,7 +383,7 @@ namespace progetto_scuola
 
         async Task backBecomeRed()
         {
-            MessageBox.Show("aaaa");
+            
             panelRed.BackColor = Color.FromArgb(255, 0, 0);
             for (int i = 255; i > 0; i--)
             {
@@ -469,39 +466,8 @@ namespace progetto_scuola
 
             if (NTcorr < 0)
             {
-
-
-                btnGuess.Enabled = false;
-
-                for (int numShow = 0; numShow < parola.Length; numShow++)
-                {
-                    Boxlettere[numShow].Text = lettere[numShow].ToString();
-                }
-                panelPerso.Location = new Point(this.Size.Width / 2 - panelPerso.Size.Width / 2, this.Size.Height / 2 - panelPerso.Size.Height / 2);
-                panelPerso.Visible = true;
-
-                Class1.Speaker(parola, volume);
-                await Task.Delay(2000);
-
-                for (int el = parola.Length - 1; el >= 0; el--)
-                {
-                    this.Controls.Remove(Boxlettere[el]);
-                }
-                lettereUsate = null;
-                lettere = null;
-                buttonPlay.Visible = true;
-                buttonPlay.Enabled = true;
-                btnGuess.Visible = false;
-                btnGuess.Enabled = false;
-                txtInsert.Visible = false;
-                txtInsert.Enabled = false;
-
-                panelPerso.Visible = false;
-                for (int el2 = 6; el2 >= 0; el2--)
-                {
-                    this.Controls.Remove(boxTentativi[el2]);
-
-                }
+                gameLostReset();
+                
                 return;
 
             } //perso
@@ -517,46 +483,7 @@ namespace progetto_scuola
 
             if (checkWin) //-----------------Vince------------------
             {
-                panelVinto.Visible = true;
-                panelVinto.Location = new Point(this.Size.Width / 2 - panelVinto.Size.Width / 2, this.Size.Height / 2 - panelVinto.Size.Height / 2);
-
-                int WinPoints = Class1.winPoints(NTcorr + 1, parola.Length);
-
-
-                playerPoints = playerPoints + WinPoints;
-
-                labelPts.Text = playerPoints.ToString();
-
-                Class1.Speaker(parola, volume);
-
-                Class1.saveGamescore(playerPoints);
-
-
-                await Task.Delay(2000);
-
-                #region torna allo stato iniziale
-                panelVinto.Visible = false;
-                for (int el = parola.Length - 1; el >= 0; el--)
-                {
-                    this.Controls.Remove(Boxlettere[el]);
-                }
-                lettereUsate = null;
-                lettere = null;
-                buttonPlay.Visible = true;
-                buttonPlay.Enabled = true;
-                btnGuess.Visible = false;
-                btnGuess.Enabled = false;
-                txtInsert.Visible = false;
-                txtInsert.Enabled = false;
-
-                for (int el2 = 6; el2 >= 0; el2--)
-                {
-                    this.Controls.Remove(boxTentativi[el2]);
-
-                }
-                buttonPlay.Focus();
-                #endregion
-
+                gameWinReset();
                 return;
             } //===============  VINCE  ================
 
@@ -616,7 +543,7 @@ namespace progetto_scuola
                 labelNome.Visible = true;
                 labelPts.Visible = true;
                 panelInfo.Visible = true;
-
+                panelInfo.Size = new Size(10 + lblDescrNome.Size.Width + labelNome.Size.Width, 10 + lblDescrNome.Size.Height + labelNome.Size.Height);
                 return;
             }
             MessageBox.Show("La lunghezza del tuo nickname deve essere compresa tra 3 e 16 caratteri");
@@ -683,6 +610,89 @@ namespace progetto_scuola
             if (!panelSettings.Visible)
             panelSettings.Visible = true;
             else panelSettings.Visible = false;
+        }
+        private async void gameLostReset()
+        {
+            
+            btnGuess.Enabled = false;
+
+            for (int numShow = 0; numShow < parola.Length; numShow++)
+            {
+                Boxlettere[numShow].Text = lettere[numShow].ToString();
+            }
+            Class1.Speaker(parola, volume);
+            await Task.Delay(1200);
+            for (int el = parola.Length - 1; el >= 0; el--)
+            {
+                this.Controls.Remove(Boxlettere[el]);
+            }
+            for (int el2 = 6; el2 >= 0; el2--)
+            {
+                this.Controls.Remove(boxTentativi[el2]);
+
+            }
+            lettereUsate = null;
+            lettere = null;
+            buttonPlay.Visible = true;
+            buttonPlay.Enabled = true;
+            btnGuess.Visible = false;
+            btnGuess.Enabled = false;
+            txtInsert.Visible = false;
+            txtInsert.Enabled = false;
+            panelRed.Visible = false;
+            panelPerso.Location = new Point(this.Size.Width / 2 - panelPerso.Size.Width / 2, this.Size.Height / 2 - panelPerso.Size.Height / 2);
+            panelPerso.Visible = true;
+
+            
+            await Task.Delay(2000);
+
+            
+            
+
+            panelPerso.Visible = false;
+            
+        }
+        private async void gameWinReset()
+        {
+            panelVinto.Visible = true;
+            panelVinto.Location = new Point(this.Size.Width / 2 - panelVinto.Size.Width / 2, this.Size.Height / 2 - panelVinto.Size.Height / 2);
+
+            int WinPoints = Class1.winPoints(NTcorr + 1, parola.Length);
+
+
+            playerPoints = playerPoints + WinPoints;
+
+            labelPts.Text = playerPoints.ToString();
+
+            Class1.Speaker(parola, volume);
+
+            Class1.saveGamescore(playerPoints);
+
+
+            await Task.Delay(2000);
+
+            #region torna allo stato iniziale
+            panelVinto.Visible = false;
+            for (int el = parola.Length - 1; el >= 0; el--)
+            {
+                this.Controls.Remove(Boxlettere[el]);
+            }
+            lettereUsate = null;
+            lettere = null;
+            buttonPlay.Visible = true;
+            buttonPlay.Enabled = true;
+            btnGuess.Visible = false;
+            btnGuess.Enabled = false;
+            txtInsert.Visible = false;
+            txtInsert.Enabled = false;
+
+            for (int el2 = 6; el2 >= 0; el2--)
+            {
+                this.Controls.Remove(boxTentativi[el2]);
+
+            }
+            buttonPlay.Focus();
+            #endregion
         }
     }
 }
