@@ -154,44 +154,59 @@ namespace progetto_scuola
             txtInsert.Text = "";
             lettereUsate = null;
             numUsate = 0;
-            parola_untranslated = Class1.datiFake();
-            //parola = "qwerty";
-
-            var client = new HttpClient();
-            var request = new HttpRequestMessage
+            bool ok = false;
+            while (!ok)
             {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri("https://google-translate113.p.rapidapi.com/api/v1/translator/text"),
-                Headers =
+                ok = true;
+                parola_untranslated = Class1.datiFake();
+                //parola = "qwerty";
+
+                var client = new HttpClient();
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = new Uri("https://google-translate113.p.rapidapi.com/api/v1/translator/text"),
+                    Headers =
     {
         { "X-RapidAPI-Key", "1921e6c576msh950b29f0deb4610p12af99jsnf9326a2067e5" },
         { "X-RapidAPI-Host", "google-translate113.p.rapidapi.com" },
     },
-                Content = new FormUrlEncodedContent(new Dictionary<string, string>
+                    Content = new FormUrlEncodedContent(new Dictionary<string, string>
     {
         { "from", "en" },
         { "to", "it" },
         { "text", parola_untranslated},
     }),
-            };
-            using (var response = await client.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
-                MessageBox.Show(body);
-                string fp = body.Split(',')[0];
-                //int cc = 10;
-                //while ((Char)body[cc] != (Char)"") 
-                
-                string jsonString = JsonSerializer.Serialize(body);
-                MessageBox.Show(jsonString);
+                };
+                using (var response = await client.SendAsync(request))
+                {
+                    response.EnsureSuccessStatusCode();
+                    var body = await response.Content.ReadAsStringAsync();
+                    //MessageBox.Show(body);
+                    string antigraffe = body.Substring(1, body.Length - 2);
+                    //MessageBox.Show(antigraffe);
+                    string fp = body.Split(',')[0];
+                    string fp2 = fp.Split(':')[1];
+                    //MessageBox.Show(fp2);
+                    string parola_translated = fp2.Substring(1, fp2.Length - 2);
+                    //MessageBox.Show(parola_translated);
+
+                    parola = parola_translated;
+                    foreach (char carattere in parola)
+                    {
+                        if (carattere == Convert.ToChar(" ") || carattere == Convert.ToChar("-"))
+                        {
+                            ok = false;
+                        }
+                    }
+
+                }
             }
-
-            //Class1.traduzione(trad, parola);
-
+            
 
 
-            parola = parola_untranslated;
+
+            
             n = parola.Length;
             Array.Resize(ref Boxlettere, n);
             Array.Resize(ref lettere, n);
@@ -654,8 +669,7 @@ namespace progetto_scuola
         }
         private async void gameWinReset()
         {
-            panelVinto.Visible = true;
-            panelVinto.Location = new Point(this.Size.Width / 2 - panelVinto.Size.Width / 2, this.Size.Height / 2 - panelVinto.Size.Height / 2);
+            
 
             int WinPoints = Class1.winPoints(NTcorr + 1, parola.Length);
 
@@ -663,36 +677,49 @@ namespace progetto_scuola
             playerPoints = playerPoints + WinPoints;
 
             labelPts.Text = playerPoints.ToString();
-
+            if (lblDescrNome.Size.Width + labelNome.Size.Width > lblDescrPts.Size.Width + labelPts.Size.Width)
+            {
+                panelInfo.Size = new Size(10 + lblDescrNome.Size.Width + labelNome.Size.Width, 10 + lblDescrNome.Size.Height + labelNome.Size.Height);
+            }
+            else panelInfo.Size = new Size(10 + lblDescrPts.Size.Width + labelPts.Size.Width, 10 + lblDescrPts.Size.Height + labelPts.Size.Height);
             Class1.Speaker(parola, volume);
 
             Class1.saveGamescore(playerPoints);
-
-
+            panelVinto.Visible = true;
+            panelVinto.Location = new Point(this.Size.Width / 2 - panelVinto.Size.Width / 2, this.Size.Height / 2 - panelVinto.Size.Height / 2);
+            btnGuess.Visible = false;
+            btnGuess.Enabled = false;
+            txtInsert.Visible = false;
+            txtInsert.Enabled = false;
+            panelRed.Visible = false;
             await Task.Delay(2000);
-
-            #region torna allo stato iniziale
-            panelVinto.Visible = false;
+           
+           
             for (int el = parola.Length - 1; el >= 0; el--)
             {
                 this.Controls.Remove(Boxlettere[el]);
             }
             lettereUsate = null;
             lettere = null;
+            
             buttonPlay.Visible = true;
             buttonPlay.Enabled = true;
-            btnGuess.Visible = false;
-            btnGuess.Enabled = false;
-            txtInsert.Visible = false;
-            txtInsert.Enabled = false;
+            
 
             for (int el2 = 6; el2 >= 0; el2--)
             {
                 this.Controls.Remove(boxTentativi[el2]);
 
             }
+            
+            
+            
+           
+            panelVinto.Visible = false;
             buttonPlay.Focus();
-            #endregion
+            
         }
+
+       
     }
 }

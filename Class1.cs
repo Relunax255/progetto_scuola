@@ -20,13 +20,7 @@ namespace Helper
             var random = new Bogus.Randomizer();
             string parola = random.Word();
 
-            foreach (char carattere in parola)
-            {
-                if (carattere == Convert.ToChar(" ") || carattere == Convert.ToChar("-"))
-                {
-                    return datiFake();
-                }
-            }
+            
 
 
             return parola;
