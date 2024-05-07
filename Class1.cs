@@ -10,6 +10,7 @@ using System.Speech.Synthesis;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Drawing;
+using progetto_scuola;
 
 namespace Helper
 {
@@ -31,23 +32,61 @@ namespace Helper
             return addPoints;
         }
 
-        public static void saveGamescore(int totalPoints)
+        public static void saveGamescore(int totalPoints) //SALVA PUNTEGGIO
         {
-            string[] Lines = File.ReadAllLines(Path.Combine(@"data", "playerinfo.txt"));
+            string[] Lines = File.ReadAllLines(Path.Combine(@"data", "playerinfo.dat"));
 
-            StreamReader reader = new StreamReader(Path.Combine(@"data", "playerinfo.txt"));
-            int scoreIndex = 0;
+            StreamReader reader = new StreamReader(Path.Combine(@"data", "playerinfo.dat"));
+            int LineIndex = 0;
             while (!reader.EndOfStream)
             {
                 if (reader.ReadLine().Split('=')[0] == "score")
                 {
                     break;
                 }
-                scoreIndex++;
+                LineIndex++;
             }
             reader.Close();
-            Lines[scoreIndex] = $"score={totalPoints}";
-            File.WriteAllLines(Path.Combine(@"data", "playerinfo.txt"), Lines);
+            Lines[LineIndex] = $"score={totalPoints}";
+            File.WriteAllLines(Path.Combine(@"data", "playerinfo.dat"), Lines);
+        }
+
+        public static void saveStreak(int streak) //SALVA STREAK
+        {
+            string[] Lines = File.ReadAllLines(Path.Combine(@"data", "playerinfo.dat"));
+
+            StreamReader reader = new StreamReader(Path.Combine(@"data", "playerinfo.dat"));
+            int LineIndex = 0;
+            while (!reader.EndOfStream)
+            {
+                if (reader.ReadLine().Split('=')[0] == "winstreak")
+                {
+                    break;
+                }
+                LineIndex++;
+            }
+            reader.Close();
+            Lines[LineIndex] = $"winstreak={streak}";
+            File.WriteAllLines(Path.Combine(@"data", "playerinfo.dat"), Lines);
+        }
+
+        public static void saveVolume(int volume) //SALVA VOLUME
+        {
+            string[] Lines = File.ReadAllLines(Path.Combine(@"data", "playerinfo.dat"));
+
+            StreamReader reader = new StreamReader(Path.Combine(@"data", "playerinfo.dat"));
+            int LineIndex = 0;
+            while (!reader.EndOfStream)
+            {
+                if (reader.ReadLine().Split('=')[0] == "volume")
+                {
+                    break;
+                }
+                LineIndex++;
+            }
+            reader.Close();
+            Lines[LineIndex] = $"volume={volume}";
+            File.WriteAllLines(Path.Combine(@"data", "playerinfo.dat"), Lines);
         }
         public static void Speaker(string parola, int vol)
         {
@@ -55,33 +94,7 @@ namespace Helper
             sp.Volume = vol;
             sp.Speak(parola);
         }
-        public async static void traduzione(string[] a, string parola)
-        {
-            var client = new HttpClient();
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri("https://google-translate113.p.rapidapi.com/api/v1/translator/text"),
-                Headers =
-    {
-        { "X-RapidAPI-Key", "1921e6c576msh950b29f0deb4610p12af99jsnf9326a2067e5" },
-        { "X-RapidAPI-Host", "google-translate113.p.rapidapi.com" },
-    },
-                Content = new FormUrlEncodedContent(new Dictionary<string, string>
-    {
-        { "from", "en" },
-        { "to", "it" },
-        { "text", parola},
-    }),
-            };
-            using (var response = await client.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
-                a[0] = body;
-            }
-
-        }
+        
 
     }
 }

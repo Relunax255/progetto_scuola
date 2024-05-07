@@ -16,6 +16,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Runtime.CompilerServices;
 
 namespace progetto_scuola
 {
@@ -36,10 +37,11 @@ namespace progetto_scuola
         int n = 0;
         int volume = 0;
         string playerName = default;
-        int playerPoints = default;
+        public int playerPoints = default;
         System.Windows.Forms.Panel panelRed = new System.Windows.Forms.Panel();
         int screenWidth = Screen.PrimaryScreen.Bounds.Width;
         int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+        int SC = 0;
 
         public Form1()
         {
@@ -70,7 +72,7 @@ namespace progetto_scuola
             buttonPlay.Location = new Point(this.Size.Width / 2 - buttonPlay.Size.Width / 2, this.Size.Height / 2 - buttonPlay.Size.Height / 2);
 
             txtNickname.Focus();
-            if (!File.Exists(Path.Combine(@"data", "playerinfo.txt")))
+            if (!File.Exists(Path.Combine(@"data", "playerinfo.dat")))
             {
                 //Directory.CreateDirectory(@"data");
                 
@@ -89,34 +91,70 @@ namespace progetto_scuola
                 #region prendi info dal file esistente
 
 
-                //panelVolumeInside.Visible = false;
+                
 
 
-                StreamReader read = new StreamReader(Path.Combine("data", "playerinfo.txt"));
+                StreamReader read = new StreamReader(Path.Combine("data", "playerinfo.dat"));
                 while (!read.EndOfStream)
                 {
-                    string line = read.ReadLine();
-                    string[] split = line.Split('=');
-                    if (split[0] == "name")
+                    //nome
+                    playerName = read.ReadLine().Split('=')[1];
+                    labelNome.Text = playerName;
+                    //punteggio
+                    playerPoints = int.Parse(read.ReadLine().Split('=')[1]);
+                    labelPts.Text = playerPoints.ToString();
+                    //volume
+                    volume = int.Parse(read.ReadLine().Split('=')[1]);
+                    ScrollVolume.Value = volume;
+                    //streak
+                    SC = int.Parse(read.ReadLine().Split('=')[1]);
+                    if (SC>0)
                     {
-                        if (split[1] == "")
-                        {
-                            buttonPlay.Visible = false;
-                            buttonPlay.Enabled = false;
-                            panelName.Visible = true;
-                            panelName.Enabled = true;
-                            labelNome.Visible = false;
-                            read.Close();
-                            return;
-                        }
-                        playerName = split[1];
-                        labelNome.Text = playerName;
+                        labelStreakCounter.Text = $"Streak di {SC}";
+                        labelStreakCounter.BackColor = Color.FromArgb(255, 64, 0);
+                        labelStreakCounter.BorderStyle = BorderStyle.FixedSingle;
                     }
-                    if (split[0] == "score")
-                    {
-                        playerPoints = int.Parse(split[1]);
-                        labelPts.Text = playerPoints.ToString();
-                    }
+                    
+                    
+                    #region alternativa non attiva
+                    //string line = read.ReadLine();
+                    //string[] split = line.Split('=');
+                    //if (split[0] == "name")
+                    //{
+                    //    if (split[1] == "")
+                    //    {
+                    //        buttonPlay.Visible = false;
+                    //        buttonPlay.Enabled = false;
+                    //        panelName.Visible = true;
+                    //        panelName.Enabled = true;
+                    //        labelNome.Visible = false;
+                    //        read.Close();
+                    //        return;
+                    //    }
+                    //    playerName = split[1];
+                    //    labelNome.Text = playerName;
+                    //}
+                    //if (split[0] == "score")
+                    //{
+                    //    playerPoints = int.Parse(split[1]);
+                    //    labelPts.Text = playerPoints.ToString();
+                    //}
+                    //if (split[0] == "winstreak")
+                    //{
+                    //    if (int.Parse(split[1]) > 0)
+                    //    {
+                    //        SC = int.Parse(split[1]);
+                    //        labelStreakCounter.Text = $"Streak di {SC}";
+                    //        labelStreakCounter.BackColor = Color.FromArgb(255, 64, 0);
+                    //        labelStreakCounter.BorderStyle = BorderStyle.FixedSingle;
+                    //    }
+                    //}
+                    //if (split[0] == "volume")
+                    //{
+                    //    volume = int.Parse(split[1]);
+                    //    ScrollVolume.Value = volume;
+                    //}
+                    #endregion
                 }
                 read.Close();
 
@@ -136,7 +174,7 @@ namespace progetto_scuola
             }
             else panelInfo.Size = new Size(10 + lblDescrPts.Size.Width + labelPts.Size.Width, 10 + lblDescrPts.Size.Height + labelPts.Size.Height);
             panelInfo.Location = new Point(this.Size.Width / 2 + 10, panelTitle.Size.Height);
-
+            labelStreakCounter.Location = new Point(panelInfo.Location.X+panelInfo.Size.Width, panelTitle.Size.Height);
 
 
 
@@ -154,6 +192,12 @@ namespace progetto_scuola
             txtInsert.Text = "";
             lettereUsate = null;
             numUsate = 0;
+           
+
+            
+
+            
+            #region genera parola
             bool ok = false;
             while (!ok)
             {
@@ -181,20 +225,13 @@ namespace progetto_scuola
                 using (var response = await client.SendAsync(request))
                 {
                     response.EnsureSuccessStatusCode();
-                    var body = await response.Content.ReadAsStringAsync();
-                    //MessageBox.Show(body);
-                    string antigraffe = body.Substring(1, body.Length - 2);
-                    //MessageBox.Show(antigraffe);
-                    string fp = body.Split(',')[0];
-                    string fp2 = fp.Split(':')[1];
-                    //MessageBox.Show(fp2);
-                    string parola_translated = fp2.Substring(1, fp2.Length - 2);
-                    //MessageBox.Show(parola_translated);
+                    var body = await response.Content.ReadAsStringAsync();        
+                    string parola_translated = body.Split('"')[3];
 
                     parola = parola_translated;
                     foreach (char carattere in parola)
                     {
-                        if (carattere == Convert.ToChar(" ") || carattere == Convert.ToChar("-"))
+                        if (carattere == Convert.ToChar(" ") || carattere == Convert.ToChar("-") || !Char.IsLetter(carattere))
                         {
                             ok = false;
                         }
@@ -202,11 +239,9 @@ namespace progetto_scuola
 
                 }
             }
+            #endregion
             
 
-
-
-            
             n = parola.Length;
             Array.Resize(ref Boxlettere, n);
             Array.Resize(ref lettere, n);
@@ -350,7 +385,7 @@ namespace progetto_scuola
             {
                 System.Windows.Forms.Panel np = new System.Windows.Forms.Panel();
                 np.Location = new Point(x, 10 + panelTitle.Size.Height);
-                np.Size = new Size(this.Size.Width/2/7, 30);
+                np.Size = new Size(this.Size.Width / 2 / 7, 30);
                 np.BackColor = Color.FromArgb(50, 255, 50);
                 np.Margin = new Padding(0);
                 np.BorderStyle = BorderStyle.FixedSingle;
@@ -360,7 +395,9 @@ namespace progetto_scuola
                 crea++;
             }
             #endregion
-            NTcorr = 6; //imposta i tentativi (7)
+            
+
+            NTcorr = 6; //7 tentativi
 
             buttonPlay.Enabled = false;
             buttonPlay.Visible = false;
@@ -368,7 +405,7 @@ namespace progetto_scuola
 
             panelRed = new System.Windows.Forms.Panel()
             {
-                BackColor = Color.FromArgb(150, 150, 255),
+                BackColor = Color.FromArgb(0, 0, 0),
                 Location = new Point(txtInsert.Location.X - 2, txtInsert.Location.Y - 2),
                 Size = new Size(txtInsert.Size.Width + 4, txtInsert.Size.Height + 4),
 
@@ -377,23 +414,7 @@ namespace progetto_scuola
 
 
             txtInsert.Focus();
-            //NON ATTIVO 
-            #region gestione casi con trattini o spazi generati
-            //
-            //for (int m = 0; m<PAROLA.Length; m++)
-            //{
-            //    if (lettere[m] == Convert.ToChar("-")) 
-            //    {
-            //        Boxlettere[m].Text = "-";
-            //    }
-            //    if (lettere[m] == Convert.ToChar(" "))
-            //    {
-            //        Boxlettere[m].Text = " ";
-            //    }
-            //}
-            //
-            #endregion
-            //NON ATTIVO 
+            
         }
 
         async Task backBecomeRed()
@@ -441,7 +462,7 @@ namespace progetto_scuola
                         {
                             Boxlettere[i2].BackColor = Color.LightBlue;
                             await Task.Delay(500);
-                            Boxlettere[i2].BackColor = Color.White;
+                            Boxlettere[i2].BackColor = this.BackColor;
                         }
                     }
                     return;
@@ -511,8 +532,10 @@ namespace progetto_scuola
 
         private void txtInsert_TextChanged(object sender, EventArgs e)
         {
+            
             if (txtInsert.Text.Length > 1) { txtInsert.Text = insertion; return; }
             if (string.IsNullOrEmpty(txtInsert.Text)) return;
+            
             if (!Char.IsLetter(Convert.ToChar(txtInsert.Text)))
             {
                 txtInsert.Text = null; return;
@@ -522,6 +545,16 @@ namespace progetto_scuola
 
             char value = Convert.ToChar(txtInsert.Text);
             char valueUpper = Char.ToUpper(value);
+            
+            int CharValue = valueUpper;
+
+
+             if (CharValue<65 || CharValue>90 && CharValue!=192 && CharValue !=200 && CharValue !=204 && CharValue !=210 && CharValue !=217 &&
+                CharValue !=193 && CharValue !=201 && CharValue !=205 && CharValue !=211 && CharValue !=218)
+            {
+                txtInsert.Text = null; return;
+            }
+            //MessageBox.Show(CharValue.ToString());
             txtInsert.Text = valueUpper.ToString();
         }
 
@@ -542,14 +575,16 @@ namespace progetto_scuola
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
 
-            if (txtNickname.Text.Length >= 0 && txtNickname.Text.Length <= 16)
+            if (txtNickname.Text.Length >= 3 && txtNickname.Text.Length <= 16 && !String.IsNullOrWhiteSpace(txtNickname.Text))
             {
                 StreamWriter w;
                 Directory.CreateDirectory(@"data");
-                w = new StreamWriter(System.IO.Path.Combine(@"data", "playerinfo.txt"));
-                w.WriteLine($"name={txtNickname.Text}"); buttonPlay.Visible = true;
-                int initScore = 0;
-                w.WriteLine($"score={initScore}");
+                w = new StreamWriter(System.IO.Path.Combine(@"data", "playerinfo.dat"));
+                
+                w.WriteLine($"name={txtNickname.Text}"); 
+                w.WriteLine("score=0");
+                w.WriteLine($"volume=0");
+                w.WriteLine("winstreak=0");
                 w.Close();
                 labelNome.Text = txtNickname.Text;
                 buttonPlay.Enabled = true;
@@ -559,6 +594,7 @@ namespace progetto_scuola
                 labelPts.Visible = true;
                 panelInfo.Visible = true;
                 panelInfo.Size = new Size(10 + lblDescrNome.Size.Width + labelNome.Size.Width, 10 + lblDescrNome.Size.Height + labelNome.Size.Height);
+                buttonPlay.Visible = true;
                 return;
             }
             MessageBox.Show("La lunghezza del tuo nickname deve essere compresa tra 3 e 16 caratteri");
@@ -596,8 +632,10 @@ namespace progetto_scuola
 
         private void ScrollVolume_Scroll(object sender, ScrollEventArgs e)
         {
-            labelVolume.Text = ScrollVolume.Value.ToString();
-            if (int.Parse(labelVolume.Text) > 99) labelVolume.Text = "100";
+            volume = ScrollVolume.Value;
+            if (volume > 99) volume = 100;
+            labelVolume.Text = volume.ToString();
+           
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -614,7 +652,7 @@ namespace progetto_scuola
         }
         private void CloseForm(object sender, FormClosingEventArgs e)
         {
-            if (!File.Exists(Path.Combine(@"data", "playerinfo.txt")) && Directory.Exists(@"data"))
+            if (!File.Exists(Path.Combine(@"data", "playerinfo.dat")) && Directory.Exists(@"data"))
             {
                 Directory.Delete(@"data");
             }
@@ -660,18 +698,23 @@ namespace progetto_scuola
 
             
             await Task.Delay(2000);
+            SC = 0;
+            Class1.saveStreak(SC);
+            labelStreakCounter.Text = null;
+            labelStreakCounter.BackColor = this.BackColor;
+            labelStreakCounter.BorderStyle = BorderStyle.None;
 
-            
-            
 
             panelPerso.Visible = false;
             
         }
+
         private async void gameWinReset()
         {
-            
+
 
             int WinPoints = Class1.winPoints(NTcorr + 1, parola.Length);
+
 
 
             playerPoints = playerPoints + WinPoints;
@@ -684,7 +727,7 @@ namespace progetto_scuola
             else panelInfo.Size = new Size(10 + lblDescrPts.Size.Width + labelPts.Size.Width, 10 + lblDescrPts.Size.Height + labelPts.Size.Height);
             Class1.Speaker(parola, volume);
 
-            Class1.saveGamescore(playerPoints);
+            
             panelVinto.Visible = true;
             panelVinto.Location = new Point(this.Size.Width / 2 - panelVinto.Size.Width / 2, this.Size.Height / 2 - panelVinto.Size.Height / 2);
             btnGuess.Visible = false;
@@ -693,33 +736,50 @@ namespace progetto_scuola
             txtInsert.Enabled = false;
             panelRed.Visible = false;
             await Task.Delay(2000);
-           
-           
+
+
             for (int el = parola.Length - 1; el >= 0; el--)
             {
                 this.Controls.Remove(Boxlettere[el]);
             }
             lettereUsate = null;
             lettere = null;
-            
+
             buttonPlay.Visible = true;
             buttonPlay.Enabled = true;
-            
+
 
             for (int el2 = 6; el2 >= 0; el2--)
             {
                 this.Controls.Remove(boxTentativi[el2]);
 
             }
+            SC++;
             
-            
-            
-           
+            labelStreakCounter.Text = $"Streak di {SC}";
+            labelStreakCounter.BackColor = Color.FromArgb(255, 64, 0);
+            labelStreakCounter.BorderStyle = BorderStyle.FixedSingle;
+            Class1.saveGamescore(playerPoints);
+            Class1.saveStreak(SC);
+
+
+
+
             panelVinto.Visible = false;
             buttonPlay.Focus();
-            
-        }
 
+        }
+        private void formClose(object sender, FormClosingEventArgs e)
+        {
+            if (File.Exists(Path.Combine(@"data", "playerinfo.dat")))
+            {
+                Class1.saveVolume(volume);
+            }
+           
+        }
+       
+
+        
        
     }
 }
