@@ -108,10 +108,10 @@ namespace progetto_scuola
                     ScrollVolume.Value = volume;
                     //streak
                     SC = int.Parse(read.ReadLine().Split('=')[1]);
-                    if (SC>0)
+                    if (SC>1)
                     {
                         labelStreakCounter.Text = $"Streak di {SC}";
-                        labelStreakCounter.BackColor = Color.FromArgb(255, 64, 0);
+                        labelStreakCounter.BackColor = Color.FromArgb(255, 255, 0);
                         labelStreakCounter.BorderStyle = BorderStyle.FixedSingle;
                     }
                     
@@ -240,8 +240,8 @@ namespace progetto_scuola
                 }
             }
             #endregion
-            
 
+            parola = "lalllalalala";
             n = parola.Length;
             Array.Resize(ref Boxlettere, n);
             Array.Resize(ref lettere, n);
@@ -385,7 +385,7 @@ namespace progetto_scuola
             {
                 System.Windows.Forms.Panel np = new System.Windows.Forms.Panel();
                 np.Location = new Point(x, 10 + panelTitle.Size.Height);
-                np.Size = new Size(this.Size.Width / 2 / 7, 30);
+                np.Size = new Size(this.Size.Width / 2 / 7 - 10, 30);
                 np.BackColor = Color.FromArgb(50, 255, 50);
                 np.Margin = new Padding(0);
                 np.BorderStyle = BorderStyle.FixedSingle;
@@ -428,6 +428,8 @@ namespace progetto_scuola
             }
 
         }
+        
+        
         private async void btnGuess_Click(object sender, EventArgs e)
         {
             if (lettereUsate == null)
@@ -455,6 +457,20 @@ namespace progetto_scuola
             {
                 if (Convert.ToChar(txtInsert.Text) == lettereUsate[i])
                 {
+
+                    Label used = new Label()
+                    {
+                        Text = $"Hai gia usato la lettera {lettereUsate[i]}!",
+                        ForeColor = Color.Red,
+                        Size = new Size(300, 50),
+                        Font = new Font("Microsoft Sans Serif", 16.25F)
+                    };
+                    used.Location = new Point(txtInsert.Location.X + txtInsert.Width + 100, txtInsert.Location.Y);
+                    this.Controls.Add(used);
+                    await Task.Delay(500);
+                    this.Controls.Remove(used);
+
+
                     for (int i2 = 0; i2 < parola.Length; i2++)
                     {
 
@@ -706,6 +722,7 @@ namespace progetto_scuola
 
 
             panelPerso.Visible = false;
+            buttonPlay.Focus();
             
         }
 
@@ -754,13 +771,18 @@ namespace progetto_scuola
                 this.Controls.Remove(boxTentativi[el2]);
 
             }
+
             SC++;
+            if (SC>1)
+            {
+                labelStreakCounter.Text = $"Streak di {SC}";
+                labelStreakCounter.BackColor = Color.FromArgb(255, 255, 0);
+                labelStreakCounter.BorderStyle = BorderStyle.FixedSingle;
+                Class1.saveGamescore(playerPoints);
+                Class1.saveStreak(SC);
+            }
             
-            labelStreakCounter.Text = $"Streak di {SC}";
-            labelStreakCounter.BackColor = Color.FromArgb(255, 64, 0);
-            labelStreakCounter.BorderStyle = BorderStyle.FixedSingle;
-            Class1.saveGamescore(playerPoints);
-            Class1.saveStreak(SC);
+            
 
 
 
