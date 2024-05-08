@@ -241,7 +241,7 @@ namespace progetto_scuola
             }
             #endregion
 
-            parola = "lalllalalala";
+     
             n = parola.Length;
             Array.Resize(ref Boxlettere, n);
             Array.Resize(ref lettere, n);
